@@ -5,11 +5,23 @@ import { Keyboard, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
 
-import { Container, Form, Input, SubmitButton, List, User, Avatar, Name, Bio, ProfileButton, ProfileButtonText } from './styles';
+import {
+  Container,
+  Form,
+  Input,
+  SubmitButton,
+  List,
+  User,
+  Avatar,
+  Name,
+  Bio,
+  ProfileButton,
+  ProfileButtonText,
+} from './styles';
 
 export default class Main extends Component {
   static navigationOptions = {
-    title: 'Main'
+    title: 'Main',
   };
 
   static propTypes = {
@@ -26,8 +38,8 @@ export default class Main extends Component {
 
   async componentDidMount() {
     const users = await AsyncStorage.getItem('users');
-      if (users) {
-        this.setState({ users: JSON.parse(users)});
+    if (users) {
+      this.setState({ users: JSON.parse(users) });
     }
   }
 
@@ -39,11 +51,10 @@ export default class Main extends Component {
     }
   }
 
-  handleNavigate = (user) => {
+  handleNavigate = user => {
     const { navigation } = this.props;
-    console.tron.log('user', user);
     navigation.navigate('User', { user });
-  }
+  };
 
   handleAddUser = async () => {
     const { users, newUser } = this.state;
@@ -55,7 +66,7 @@ export default class Main extends Component {
       name: response.data.name,
       login: response.data.login,
       bio: response.data.bio,
-      avatar: response.data.avatar_url
+      avatar: response.data.avatar_url,
     };
 
     this.setState({
@@ -94,14 +105,14 @@ export default class Main extends Component {
           data={users}
           keyExtractor={user => user.login}
           renderItem={({ item }) => (
-           <User>
-             <Avatar source={{ uri: item.avatar }} />
-             <Name>{item.name}</Name>
-             <Bio>{item.bio}</Bio>
-             <ProfileButton onPress={() => this.handleNavigate(item)}>
-               <ProfileButtonText>Ver perfil</ProfileButtonText>
-             </ProfileButton>
-           </User>
+            <User>
+              <Avatar source={{ uri: item.avatar }} />
+              <Name>{item.name}</Name>
+              <Bio>{item.bio}</Bio>
+              <ProfileButton onPress={() => this.handleNavigate(item)}>
+                <ProfileButtonText>Ver perfil</ProfileButtonText>
+              </ProfileButton>
+            </User>
           )}
         />
       </Container>
